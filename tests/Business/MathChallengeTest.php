@@ -33,22 +33,4 @@ class MathChallengeTest extends TestCase
 
         $this->assertEquals(33173, $result);
     }
-
-    public function testThisIsAhappyNumbers()
-    {
-        $multiples = new MathChallenge();
-
-        $result = $multiples->happyNumbers(49);
-
-        $this->assertEquals(true, $result);
-    }
-
-    public function testThisIsNotAhappyNumbers()
-    {
-        $multiples = new MathChallenge();
-
-        $result = $multiples->happyNumbers(50);
-
-        $this->assertEquals(false, $result);
-    }
 }

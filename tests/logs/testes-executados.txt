@@ -1,7 +1,10 @@
+Happy Numbers (App\Tests\Business\HappyNumbers)
+ [x] Happy numbers true
+ [x] Happy numbers false
+ [x] Happy numbers received invalid value
+
 Math Challenge (App\Tests\Business\MathChallenge)
  [x] Multiples three or five minor thousand
  [x] Multiples three and five minor thousand
  [x] Multiples three or five and seven minor thousand
- [x] This is ahappy numbers
- [x] This is not ahappy numbers
 

@@ -2,6 +2,7 @@
 
 namespace App\Business;
 
+use App\Exceptions\HappyNumbersException;
 use Exception;
 
 class MathChallenge {
@@ -39,32 +40,5 @@ class MathChallenge {
         }
 
         return array_sum($this->multiplesAdded);
-    }
-
-    public function happyNumbers(int $value): bool
-    {
-        if ($value < 0) {
-            throw new Exception("Invalid number!");
-        }
-
-        $currentValue = $value;
-        $result = 0;
-        $calculatedNumbers = [];
-        
-        while($currentValue != 1) {
-            foreach(str_split($currentValue) as $value) {
-                $result += $value ** 2;
-            }
-            
-            if (in_array($result, $calculatedNumbers)) {
-                return false;
-            }
-            
-            array_push($calculatedNumbers, $result);
-            $currentValue = $result;
-            $result = 0;
-        }
-
-        return true;
     }
 }
