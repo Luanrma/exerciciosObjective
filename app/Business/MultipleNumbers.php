@@ -2,16 +2,13 @@
 
 namespace App\Business;
 
-use App\Exceptions\HappyNumbersException;
-use Exception;
-
-class MathChallenge {
+class MultipleNumbers {
 
     private $multiplesAdded = [];
 
-    public function multiplesThreeOrFiveMinorThousand(): int
+    public function multiplesThreeOrFive(int $number): int
     {   
-        for ($i=1; $i < 1000; $i++) {
+        for ($i=1; $i < $number; $i++) {
             if (($i % 3) == 0 || ($i % 5) == 0) {
                 array_push($this->multiplesAdded, $i);
             }		
@@ -20,9 +17,9 @@ class MathChallenge {
         return array_sum($this->multiplesAdded);
     }
 
-    public function multiplesThreeAndFiveMinorThousand(): int
+    public function multiplesThreeAndFive(int $number): int
     {	
-        for ($i=1; $i < 1000; $i++) {
+        for ($i=1; $i < $number; $i++) {
             if (($i % 3) == 0 && ($i % 5) == 0) {
                 array_push($this->multiplesAdded, $i);
             }		
@@ -31,9 +28,9 @@ class MathChallenge {
         return array_sum($this->multiplesAdded);
     }
 
-    public function multiplesThreeOrFiveAndSevenMinorThousand(): int
+    public function multiplesThreeOrFiveAndSeven(int $number): int
     {
-        for ($i=1; $i < 1000; $i++) {
+        for ($i=1; $i < $number; $i++) {
             if ((($i % 3) == 0 || ($i % 5) == 0) && ($i % 7) == 0) {
                 array_push($this->multiplesAdded, $i);
             }		

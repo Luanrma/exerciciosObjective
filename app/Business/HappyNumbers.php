@@ -8,50 +8,60 @@ class HappyNumbers
 {
     private $valuesAdded = [];
     private $initialValue = 0;
-    private $currentValue = 0;
-    private $result = 0;
 
     public function itsAHappyValue(int $value)
     {
         $this->checkValue($value);
         
-        $this->currentValue = $this->initialValue;
-        $this->result = 0;
+        $currentValue = $this->initialValue;
         
-        while($this->currentValue != 1) {
-            $this->calculateHappyNumber();
+        while($currentValue != 1) {
+            $result = $this->calculateHappyNumber($currentValue);
             
-            if ($this->resultAlreadyCalculated($this->result)) {
+            if ($this->resultAlreadyCalculated($result)) {
                 return false;
             }
 
-            array_push($this->valuesAdded, $this->result);
+            array_push($this->valuesAdded, $result);
            
-            $this->currentValue = $this->result;
-            $this->result = 0;
+            $currentValue = $result;
         }
 
         return true;
     }
 
-    public function calculateHappyNumber()
+    public function getInitialValue(): int
     {
-        foreach(str_split($this->currentValue) as $value) {
-            $this->result += $value ** 2;
-        }
+        return $this->initialValue;
     }
 
-    public function resultAlreadyCalculated(int $result)
+    public function getValuesAdded(): array
+    {
+        return $this->valuesAdded;
+    }
+
+    private function calculateHappyNumber(int $currentValue)
+    {
+        $result = 0;
+
+        foreach(str_split($currentValue) as $value) {
+            $result += $value ** 2;
+        }
+
+        return $result;
+    }
+
+    private function resultAlreadyCalculated(int $result)
     {
         if (in_array($result, $this->valuesAdded)) {
             return true;
         }
     }
 
-    public function checkValue(int $value)
+    private function checkValue(int $value)
     {
         if ($value < 0) {
-            throw new HappyNumbersException("Invalid number!");
+            throw new HappyNumbersException("Invalid value!");
         }
 
         $this->initialValue = $value;

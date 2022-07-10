@@ -3,8 +3,20 @@ Happy Numbers (App\Tests\Business\HappyNumbers)
  [x] Happy numbers false
  [x] Happy numbers received invalid value
 
-Math Challenge (App\Tests\Business\MathChallenge)
+Multiple Numbers (App\Tests\Business\MultipleNumbers)
  [x] Multiples three or five minor thousand
  [x] Multiples three and five minor thousand
  [x] Multiples three or five and seven minor thousand
+
+Transform Words In Numbers (App\Tests\Business\TransformWordsInNumbers)
+ [x] Empty word
+ [x] Word with invalid characters
+ [x] Word with lowercase letters only
+ [x] Word with upper case letters only
+ [x] Word with upper and lower case letters
+ [x] Prime number true
+ [x] Prime number false
+ [x] Happy number true
+ [x] Happy number false
+ [x] Multiples three or five
 

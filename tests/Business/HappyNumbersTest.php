@@ -8,31 +8,32 @@ use PHPUnit\Framework\TestCase;
 
 class HappyNumbersTest extends TestCase
 {
+    private $happyNumber;
+
+    public function setUp(): void
+    {
+        $this->happyNumber = new HappyNumbers();
+    }
+
     public function testHappyNumbersTrue()
     {
-        $multiples = new HappyNumbers();
-
-        $result = $multiples->itsAHappyValue(49);
+        $result = $this->happyNumber->itsAHappyValue(49);
 
         $this->assertEquals(true, $result);
     }
 
     public function testHappyNumbersFalse()
     {
-        $multiples = new HappyNumbers();
-
-        $result = $multiples->itsAHappyValue(50);
+        $result = $this->happyNumber->itsAHappyValue(50);
 
         $this->assertEquals(false, $result);
     }
 
     public function testHappyNumbersReceivedInvalidValue()
     {
-        $multiples = new HappyNumbers();
-
         $this->expectException(HappyNumbersException::class);
-        $this->expectExceptionMessage('Invalid number!');
+        $this->expectExceptionMessage('Invalid value!');
 
-        $multiples->itsAHappyValue(-50);
+        $this->happyNumber->itsAHappyValue(-50);
     }
 }
