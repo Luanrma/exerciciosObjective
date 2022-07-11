@@ -1,77 +1,61 @@
-
 <?php
 
 require '../vendor/autoload.php';
 
-use App\Business\HappyNumbers;
-use App\Business\MultipleNumbers;
-use App\Business\TransformWordsInNumbers;
-use App\Services\Correios;
-use App\Services\CorreioService;
+use App\Business\ShoppingCart;
+use App\Models\Product;
+use App\Models\User;
 use App\Services\CorreiosService;
-use App\Services\Frete;
 
-// $c = new MultipleNumbers;
-// echo $c->multiplesThreeOrFiveMinor(10);
-// try {
-//    $a = new HappyNumbers();
-//    var_dump($a->itsAHappyValue(50));
-//    echo "<br/>Valor inicial é: " . $a->getInitialValue();
-//    foreach($a->getValuesAdded() as $value) {
-//       echo "<br/> Os valores calculados são: $value <br/>";
-//    }
+$jose = new User("José", "69980970");
 
-// } catch (Exception $e) {
-//    echo $e->getMessage();
-// }
-// $b = new TransformWordsInNumbers(new HappyNumbers, new MultipleNumbers);
-// print_r($b->transformWord("CaRrO"));
+$videoGame = new Product("PS5", 4599.90);
+$control = new Product("Control", 349.00);
 
-// $correio = new CorreioService();
-// $correio->teste();
+$list = new ShoppingCart($jose, new CorreiosService());
+$list->addProduct($videoGame, 1);
+$list->addProduct($control, 2);
 
-$correioObj = new CorreiosService();
+$packageParamsJose = [
+   'codigoServico' => CorreiosService::SERVICO_SEDEX,
+   'cepOrigem' => "09010100",
+   'peso' => 1,
+   'formato' => CorreiosService::FORMATO_CAIXA_PACOTE,
+   'comprimento' => 15,
+   'altura' => 15,
+   'largura' => 15,
+   'diametro' => 0,
+   'maoPropria' => false,
+   'valorDeclarado' => 0,
+   'avisoRecebimento' => false
+];
 
-$codigoServico = CorreiosService::SERVICO_SEDEX;
-$cepOrigem = "09010100";
-$cepDestino = "24310430";
-$peso = 1;
-$formato = CorreiosService::FORMATO_CAIXA_PACOTE;
-$comprimento = 15;
-$altura = 15;
-$largura = 15;
-$diametro = 0;
-$maoPropria = false;
-$valorDeclarado = 0;
-$avisoRecebimento = false;
+print_r($list->calculateShipping($packageParamsJose));
+echo "<br/>";
 
-$frete = $correioObj->calcularFrete(
-   $codigoServico,
-   $cepOrigem,
-   $cepDestino,
-   $peso,
-   $formato,
-   $comprimento,
-   $altura,
-   $largura,
-   $diametro,
-   $maoPropria,
-   $valorDeclarado,
-   $avisoRecebimento
-);
+// ----------------------------------------------------------//
+$maria = new User("Maria", "29230900");
 
-if (!$frete) {
+$cookie = new Product("Trakinas", 2.50);
+$soda = new Product("Pepsi 2l", 7.34);
 
-}
+$list = new ShoppingCart($maria, new CorreiosService());
+$list->addProduct($cookie, 5);
+$list->addProduct($soda, 1);
 
-if (strlen($frete->MsgErro)) {
-   echo "Erro: " . $frete->MsgErro;
-   exit;
-}
+$packageParamsMaria = [
+   'codigoServico' => CorreiosService::SERVICO_PAC,
+   'cepOrigem' => "09010100",
+   'peso' => 1,
+   'formato' => CorreiosService::FORMATO_CAIXA_PACOTE,
+   'comprimento' => 10,
+   'altura' => 10,
+   'largura' => 10,
+   'diametro' => 0,
+   'maoPropria' => false,
+   'valorDeclarado' => 0,
+   'avisoRecebimento' => false
+];
 
-echo "CEP Origem: " . $cepOrigem . "<br/>";
-echo "CEP Destino: " . $cepDestino . "<br/>";
-echo "Valor: " . $frete->Valor . "<br/>";
-echo "Prazo: " . $frete->PrazoEntrega . "<br/>";
-
-
+print_r($list->calculateShipping($packageParamsMaria));
+echo "<br/>";

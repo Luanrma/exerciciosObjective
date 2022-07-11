@@ -2,6 +2,9 @@
 
 namespace App\Services;
 
+use SebastianBergmann\Type\ObjectType;
+use SimpleXMLElement;
+
 class CorreiosService
 {
     const URL_BASE = 'http://ws.correios.com.br';
@@ -25,47 +28,34 @@ class CorreiosService
         $this->senhaEmpresa = $senhaEmpresa;
     }
 
-    public function calcularFrete(
-        $codigoServico,
-        $cepOrigem,
-        $cepDestino,
-        $peso,
-        $formato,
-        $comprimento,
-        $altura,
-        $largura,
-        $diametro = 0,
-        $maoPropria = false,
-        $valorDeclarado = 0,
-        $avisoRecebimento = false
-    )
+    public function calculateShipping(array $params)
     {
-        $parametros = [
+        $data = [
             "nCdEmpresa" => $this->codigoEmpresa,
             "sDsSenha" => $this->senhaEmpresa,
-            "nCdServico" => $codigoServico,
-            "sCepOrigem" => $cepOrigem,
-            "sCepDestino" => $cepDestino,
-            "nVlPeso" => $peso,
-            "nCdFormato" => $formato,
-            "nVlComprimento" => $comprimento,
-            "nVlLargura" => $largura,
-            "nVlAltura" => $altura,
-            "nVlDiametro" => $diametro,
-            "sCdMaoPropria" => $maoPropria ? 'S' : 'N',
-            "nVlValorDeclarado" => $valorDeclarado,
-            "sCdAvisoRecebimento" => $avisoRecebimento ? 'S' : 'N',
+            "nCdServico" => $params['codigoServico'],
+            "sCepOrigem" => $params['cepOrigem'],
+            "sCepDestino" => $params['cepDestino'],
+            "nVlPeso" => $params['peso'],
+            "nCdFormato" => $params['formato'],
+            "nVlComprimento" => $params['comprimento'],
+            "nVlLargura" => $params['largura'],
+            "nVlAltura" => $params['altura'],
+            "nVlDiametro" => $params['diametro'],
+            "sCdMaoPropria" => $params['maoPropria'] ? 'S' : 'N',
+            "nVlValorDeclarado" => $params['valorDeclarado'],
+            "sCdAvisoRecebimento" => $params['avisoRecebimento'] ? 'S' : 'N',
             "StrRetorno" => 'xml'
         ];
 
-        $query = http_build_query($parametros);
+        $query = http_build_query($data);
 
-        $resultado = $this->get('/calculador/CalcPrecoPrazo.aspx?' . $query);
+        $result = $this->sendRequest('/calculador/CalcPrecoPrazo.aspx?' . $query);
 
-        return $resultado ? $resultado->cServico : null;   
+        return $result ? $result->cServico : null;   
     }
 
-    public function get($resource)
+    private function sendRequest($resource)
     {
         $endPoint = SELF::URL_BASE . $resource;
 
@@ -81,6 +71,6 @@ class CorreiosService
                 
         curl_close(($curl));
 
-        return strlen($response) ? simplexml_load_string($response) : null;
+        return strlen($response) ? new SimpleXMLElement($response) : null;
     }
 }
