@@ -6,5 +6,10 @@ use PHPUnit\Framework\TestCase;
 
 class CorreiosServiceTest extends TestCase
 {
-    
+    private $correiosService;
+
+    public function setUp(): void
+    {
+        
+    }
 }

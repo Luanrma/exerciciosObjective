@@ -2,6 +2,7 @@
 
 namespace App\Business;
 
+use App\Exceptions\ShoppingCartException;
 use App\Models\Product;
 use App\Models\User;
 use App\Services\CorreiosService;
@@ -21,13 +22,34 @@ class ShoppingCart
         $this->correios = $correios;
     }
 
-    public function addProduct(Product $product, int $amount): void
+    public function addProduct(array $productData, int $amount): void
     {
-        array_push($this->shoppingList, [
-            "name" => $product->getName(),
-            "value" => $product->getValue(),
-            "amount" => $amount
-        ]);
+        if ($this->checkIfProductAlreadyAdded($productData['name'])) {
+            throw new ShoppingCartException('This product has already been added to cart!');
+        }
+
+        array_push($this->shoppingList, array_merge($productData, ["amount" => $amount]));
+    }
+
+    public function removeProductFromCart(string $productName): void
+    {
+        foreach($this->shoppingList as $key => $value) {
+           
+            if ($value['name'] == $productName) {
+                array_splice($this->shoppingList, $key, 1);            
+            }
+        }
+    }
+
+    private function checkIfProductAlreadyAdded(string $productName) 
+    {
+        foreach($this->shoppingList as $key => $value) {
+            if ($value['name'] == $productName) {
+                return true;                
+            }
+        }
+
+        return false;
     }
 
     public function calculateShipping(array $packageParams)
@@ -52,7 +74,7 @@ class ShoppingCart
     {
         $totalProductsValue = 0;
 
-        foreach($this->getShoppingList()['products'] as $product) {
+        foreach($this->getShoppingList() as $product) {
             $totalProductsValue += ($product['value'] * $product['amount']);
         }
 
@@ -61,13 +83,6 @@ class ShoppingCart
 
     public function getShoppingList()
     {
-        return [
-            "client" => [
-                "name" => $this->listOwner->getName(),
-                "cep" => $this->listOwner->getCep()
-            ],
-            "products" => $this->shoppingList
-        ];
+        return $this->shoppingList;
     }
-
 }

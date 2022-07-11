@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use SebastianBergmann\Type\ObjectType;
 use SimpleXMLElement;
 
 class CorreiosService

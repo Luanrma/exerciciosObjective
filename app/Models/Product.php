@@ -22,4 +22,12 @@ class Product
     {
         return $this->value;
     }
+
+    public function getProduct()
+    {
+        return [
+            'name' => $this->name,
+            'value' => $this->value
+        ];
+    }
 }

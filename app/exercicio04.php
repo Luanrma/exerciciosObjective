@@ -13,8 +13,8 @@ $videoGame = new Product("PS5", 4599.90);
 $control = new Product("Control", 349.00);
 
 $listJose = new ShoppingCart($jose, new CorreiosService());
-$listJose->addProduct($videoGame, 1);
-$listJose->addProduct($control, 2);
+$listJose->addProduct($videoGame->getProduct(), 1);
+$listJose->addProduct($control->getProduct(), 2);
 
 $packageParamsJose = [
    'codigoServico' => CorreiosService::SERVICO_SEDEX,
@@ -30,6 +30,7 @@ $packageParamsJose = [
    'avisoRecebimento' => false
 ];
 
+echo "<pre>";
 print_r($listJose->calculateShipping($packageParamsJose));
 echo "<br/>";
 
@@ -40,8 +41,8 @@ $cookie = new Product("Trakinas", 2.50);
 $soda = new Product("Pepsi 2l", 7.34);
 
 $listMaria = new ShoppingCart($maria, new CorreiosService());
-$listMaria->addProduct($cookie, 5);
-$listMaria->addProduct($soda, 1);
+$listMaria->addProduct($cookie->getProduct(), 5);
+$listMaria->addProduct($soda->getProduct(), 1);
 
 $packageParamsMaria = [
    'codigoServico' => CorreiosService::SERVICO_PAC,
