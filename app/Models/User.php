@@ -5,12 +5,12 @@ namespace App\Models;
 class User
 {
     private $name;
-    private $cep;
+    private $zipCode;
 
-    public function __construct(string $name, string $cep)
+    public function __construct(string $name, string $zipCode)
     {
         $this->name = $name;
-        $this->cep = $cep;
+        $this->zipCode = $zipCode;
     }
 
     public function getName()
@@ -18,8 +18,8 @@ class User
         return $this->name;
     }
 
-    public function getCep()
+    public function getZipCode()
     {
-        return $this->cep;
+        return $this->zipCode;
     }
 }

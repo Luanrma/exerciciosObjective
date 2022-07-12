@@ -8,6 +8,15 @@ Multiple Numbers (App\Tests\Business\MultipleNumbers)
  [x] Multiples three and five minor thousand
  [x] Multiples three or five and seven minor thousand
 
+Shopping Cart Business (App\Tests\Business\ShoppingCartBusiness)
+ [x] If add product to list with data set #0
+ [x] If remove product to list with data set #0
+ [x] If not informed valid quantity to product with data set #0
+ [x] If try add two identical products to list with data set #0
+ [x] Calculate total shopping value after adding products with data set #0
+ [x] Calculate total shopping value after remove product with data set #0
+ [x] Calculate total shopping value without adding products
+
 Transform Words In Numbers (App\Tests\Business\TransformWordsInNumbers)
  [x] Empty word
  [x] Word with invalid characters
@@ -19,4 +28,15 @@ Transform Words In Numbers (App\Tests\Business\TransformWordsInNumbers)
  [x] Happy number true
  [x] Happy number false
  [x] Multiples three or five
+
+Correios Service (App\Tests\Services\CorreiosService)
+ [x] Calculate shipping with data set #0
+ [x] Calculate shipping with data set #1
+ [x] Calculate shipping with data set #2
+ [x] Calculate shipping with data set #3
+
+Payment Service (App\Tests\Services\PaymentService)
+ [x] Calculate payment with value greater than one hundred with data set #0
+ [x] Calculate payment with value less than one hundred and zip code parana with data set #0
+ [x] Calculate payment with value less than one hundred and zip code minas gerais with data set #0
 
