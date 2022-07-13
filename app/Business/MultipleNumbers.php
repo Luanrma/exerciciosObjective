@@ -4,7 +4,7 @@ namespace App\Business;
 
 class MultipleNumbers {
 
-    private $multiplesAdded = [];
+    private array $multiplesAdded = [];
 
     public function multiplesThreeOrFive(int $number): int
     {   

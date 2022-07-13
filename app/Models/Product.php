@@ -4,8 +4,8 @@ namespace App\Models;
 
 class Product
 {
-    private $name;
-    private $value;
+    private string $name;
+    private float $value;
 
     public function __construct(string $name, float $value)
     {

@@ -4,8 +4,8 @@ namespace App\Models;
 
 class User
 {
-    private $name;
-    private $zipCode;
+    private string $name;
+    private string $zipCode;
 
     public function __construct(string $name, string $zipCode)
     {

@@ -3,13 +3,13 @@
 namespace App\Services;
 
 use App\Business\ShoppingCartBusiness;
+use App\Interfaces\CorreriosInterface;
 
-class PaymentService
+class PaymentService implements CorreriosInterface
 {
-    // - Um serviço que recebe o carrinho, e retorna o valor final para o usuário
-    private $shoppingCartBusiness;
-    private $correiosService;
-    private $paymentDetails;
+    private object $shoppingCartBusiness;
+    private object $correiosService;
+    private array $paymentDetails;
 
     public function __construct(
         ShoppingCartBusiness $shoppingCartBusiness,
@@ -22,27 +22,44 @@ class PaymentService
 
     public function calculatePayment()
     {
-        $this->setClientData();
-        $this->setShoppingCartValue(); 
-        $this->setTotalShoppingCartValue();
-        $this->setShippingValue();
-        
-        $this->paymentDetails['totalWithShipping'] = $this->paymentDetails['shoppingCartValue'] + $this->paymentDetails['shippingPrice'];
+        $this->paymentDetails['client'] = $this->buildClientData();
+        $this->paymentDetails['products'] = $this->buildShoppingCartValue(); 
+        $this->paymentDetails['shoppingCartValue'] = $this->calculateTotalShoppingCartValue();
+        $this->paymentDetails['shippingPrice'] = $this->calculateShipping($this->paymentDetails['client']['zipCode']);
+        $this->paymentDetails['totalWithShipping'] = $this->calculateTotalPayment();
 
         return $this->paymentDetails;
     }
 
-    private function setClientData()
+    public function calculateShipping(string $zipCode): float
     {
-        $this->paymentDetails['client'] = $this->shoppingCartBusiness->getUserData();
+        $totalShoppingValue = $this->paymentDetails['shoppingCartValue'];
+
+        $shippingPrice = $totalShoppingValue < 100 
+            ? $this->correiosService->calculateShipping($zipCode)
+            : 0;
+        
+        $this->paymentDetails['shippingPrice'] = $this->paymentDetails['shoppingCartValue'] + $shippingPrice;
+
+        return $shippingPrice;
     }
 
-    private function setShoppingCartValue()
+    private function calculateTotalPayment()
     {
-        $this->paymentDetails['products'] = $this->shoppingCartBusiness->getShoppingList();
+        return $this->paymentDetails['shoppingCartValue'] + $this->paymentDetails['shippingPrice'];
     }
 
-    private function setTotalShoppingCartValue()
+    private function buildClientData()
+    {
+        return $this->shoppingCartBusiness->getUserData();
+    }
+
+    private function buildShoppingCartValue()
+    {
+        return $this->shoppingCartBusiness->getShoppingList();
+    }
+
+    private function calculateTotalShoppingCartValue()
     {
         $totalShoppingCartValue = 0;
 
@@ -50,19 +67,6 @@ class PaymentService
             $totalShoppingCartValue += ($product['value'] * $product['amount']);
         }
 
-        $this->paymentDetails['shoppingCartValue'] = $totalShoppingCartValue;
-    }
-
-    private function setShippingValue()
-    {
-        $totalShoppingValue = $this->paymentDetails['shoppingCartValue'];
-
-        $shippingPrice = $totalShoppingValue < 100 
-            ? $this->correiosService->calculateShipping()
-            : 0;
-        
-        $this->paymentDetails['shippingPrice'] = $shippingPrice;
-
-        $totalShoppingValue += $shippingPrice;
+        return $totalShoppingCartValue;
     }
 }

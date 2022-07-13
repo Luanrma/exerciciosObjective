@@ -6,8 +6,8 @@ use App\Exceptions\HappyNumbersException;
 
 class HappyNumbers
 {
-    private $valuesAdded = [];
-    private $initialValue = 0;
+    private array $valuesAdded = [];
+    private int $initialValue = 0;
 
     public function itsAHappyValue(int $value)
     {

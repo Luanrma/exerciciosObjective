@@ -7,9 +7,9 @@ use App\Models\User;
 
 class ShoppingCartBusiness
 {
-    private $user;
-    private $shoppingList = [];
-    private $totalShoppingCartValue = 0;
+    private object $user;
+    private array $shoppingList = [];
+    private float $totalShoppingCartValue = 0;
 
     public function __construct(User $user)
     {
@@ -78,7 +78,7 @@ class ShoppingCartBusiness
                 throw new ShoppingCartException('The ' . $productName . ' product has already been added to cart!');               
             }
         }
-
+        
         return false;
     }
 }

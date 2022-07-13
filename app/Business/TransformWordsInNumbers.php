@@ -33,8 +33,8 @@ class TransformWordsInNumbers
         "z" => 26
     ];
 
-    private $happyNumbers;
-    private $multipleNumbers;
+    private object $happyNumbers;
+    private object $multipleNumbers;
 
     public function __construct(
         HappyNumbers $happyNumbers,

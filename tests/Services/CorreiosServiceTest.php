@@ -12,8 +12,8 @@ class CorreiosServiceTest extends TestCase
      */
     public function testCalculateShipping($zipCode)
     {
-        $correiosService = new CorreiosService($zipCode[0]);
-        $result = $correiosService->calculateShipping();
+        $correiosService = new CorreiosService();
+        $result = $correiosService->calculateShipping($zipCode[0]);
         static::assertEquals($zipCode[1], $result);
     }
 
