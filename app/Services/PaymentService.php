@@ -3,9 +3,9 @@
 namespace App\Services;
 
 use App\Business\ShoppingCartBusiness;
-use App\Interfaces\CorreriosInterface;
+use App\Interfaces\CorreiosInterface;
 
-class PaymentService implements CorreriosInterface
+class PaymentService implements CorreiosInterface
 {
     private object $shoppingCartBusiness;
     private object $correiosService;

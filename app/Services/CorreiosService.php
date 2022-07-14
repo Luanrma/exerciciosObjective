@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
-use App\Interfaces\CorreriosInterface;
+use App\Interfaces\CorreiosInterface;
 
-class CorreiosService implements CorreriosInterface
+class CorreiosService implements CorreiosInterface
 {
     CONST GRANDE_SAO_PAULO = '0';
     CONST PARANA_SANTA_CATARINA = '8';

@@ -2,7 +2,7 @@
 
 namespace App\Interfaces;
 
-Interface CorreriosInterface
+Interface CorreiosInterface
 {
     public function calculateShipping(string $zipCode): float;
 }
